@@ -11,3 +11,65 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+#updates-table {
+  transition: all 0.5s;
+  margin: 3%;
+  width: 94%;
+}
+
+#details-table {
+  transition: all 0.5s;
+  margin: 3%;
+  width: 94%;
+}
+
+#table-label {
+  transition: all 0.5s;
+  margin: 2%;
+}
+
+tr {
+  transition: all 0.5s;
+}
+
+tr:hover {
+  background-color: darkgray;
+}
+
+#popup {
+  border: 1px solid gray;
+  visibility: hidden;
+  position: absolute;
+  border-radius: 5px;
+  width: 40%;
+  background: #fafafa;
+  left: 30%;
+  top: 5%;
+  transition: all 0.5s;
+}
+
+#popupTitle {
+  background: lightgray;
+}
+
+#popupContent {
+  margin: 1%;
+  padding: 3%;
+}
+
+#popupBtns {
+  border-top: 1px solid gray;
+  padding: 2%;
+}
+
+#popupActionBtn {
+  display: none;
+  float: left;
+  margin: 1%;
+}
+
+#popupCloseBtn {
+  float: right;
+  margin: 1%;
+}
