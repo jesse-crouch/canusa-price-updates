@@ -5,6 +5,7 @@ import $ from 'jquery';
 import { uuid } from 'uuidv4';
 import FileUpload from 'react-upload-file';
 import axios from 'axios';
+import server from '../endpoint';
 
 export default class UpdateList extends Component {
 
@@ -22,7 +23,7 @@ export default class UpdateList extends Component {
             
         } else {
             console.log('GET UPDATES');
-            $.get('http://18.217.173.236:6120/getAllUpdates', result => {
+            $.get(server + 'getAllUpdates', result => {
                 if (result.error) {
                     console.log(result.error);
                 } else {
@@ -124,20 +125,18 @@ export default class UpdateList extends Component {
         return (
             <div>
                 <div>
-                    <input type="file" name="file" onChange={this.onFileInput} />
-                    <FileUpload options={options} chooseFileButton={<button className="btn btn-primary">Upload</button>} />
                     <h4 id="table-label">Price Updates</h4>
                 </div>
                 <table id="updates-table" className="table table-striped" style={{display: 'none'}}>
                     <thead className="thead thead-dark">
-                        <th>Date Due</th>
                         <th>Date Received</th>
-                        <th>Priority</th>
+                        <th>Date Due</th>
                         <th>Elapsed Time</th>
-                        <th>Document Number</th>
                         <th>Vendor</th>
                         <th>Status</th>
+                        <th>Priority</th>
                         <th>Items</th>
+                        <th>Filename</th>
                     </thead>
                     <tbody>{this.state.updates}</tbody>
                 </table>

@@ -3,10 +3,66 @@ import { uuid } from 'uuidv4';
 
 export default class Update extends Component {
     render() {
-        var due_date = new Date(this.props.update.due_date*1000).toLocaleDateString();
+        console.log(this.props.update);
+
+        //var due_date = new Date(this.props.update.due_date*1000).toLocaleDateString();
         var received_date = new Date(this.props.update.received_date*1000).toLocaleDateString();
+        var due_date = new Date(this.props.update.due_date*1000).toLocaleDateString();
+        var priority = this.props.update.priority;
+        switch (priority) {
+            case 0:
+                priority = 'Low';
+                break;
+            case 1:
+                priority = 'Medium';
+                break;
+            case 2:
+                priority = 'High';
+                break;
+            default:
+                priority = 'Low';
+                break;
+        }
+        var vendor_id = this.props.update.name;
+        var status = this.props.update.status;
+        switch (status) {
+            case 0:
+                status = 'Uploading';
+                break;
+            case 1:
+                status = 'Uploaded';
+                break;
+            case 2:
+                status = 'Processing';
+                break;
+            case 3:
+                status = 'Ready';
+                break;
+            default:
+                status = 'Error';
+                break;
+        }
+        var items = this.props.update.items;
+        var url = this.props.update.url;
+        var elapsed_milliseconds = (new Date().getTime()/1000) - this.props.update.received_date;
+        var elapsed_time = formatElapsedTime(Math.round(elapsed_milliseconds/1), '');
 
         return (
+            <tr id={"u-" + this.props.update.id} key={uuid()} className="update-row" onClick={(e) => {
+                this.props.showDetails(e.target.parentElement.id.substr(2));
+            }}>
+                <td>{received_date}</td>
+                <td>{due_date}</td>
+                <td>{elapsed_time}</td>
+                <td>{vendor_id}</td>
+                <td>{status}</td>
+                <td>{priority}</td>
+                <td>{items}</td>
+                <td>{url}</td>
+            </tr>
+        )
+        
+        /*return (
             <tr id={"u-" + this.props.update.id} key={uuid()} className="update-row" onClick={(e) => {
                 this.props.showDetails(e.target.parentElement.id.substr(2));
             }}>
@@ -19,27 +75,7 @@ export default class Update extends Component {
                 <td>{formatStatus(this.props.update.status)}</td>
                 <td>{this.props.update.items}</td>
             </tr>
-        )
-    }
-}
-
-function formatStatus(status) {
-    if (status === 0) {
-        return "Not Started";
-    } else if (status === 1) {
-        return "Started";
-    } else {
-        return "Halted";
-    }
-}
-
-function formatPriority(priority) {
-    if (priority === 0) {
-        return "High";
-    } else if (priority === 1) {
-        return "Medium";
-    } else {
-        return "Low";
+        )*/
     }
 }
 
@@ -52,17 +88,17 @@ function formatElapsedTime(seconds, output) {
     } else {
         var months = Math.floor(seconds / 2592000);
         if (months > 0) {
-            nextOutput += months + 'm ';
+            nextOutput += months + ' months, ';
             return formatElapsedTime(seconds - (months * 2592000), nextOutput);
         } else {
             var days = Math.floor(seconds / 86400);
             if (days > 0) {
-                nextOutput += days + 'd ';
+                nextOutput += days + ' days, ';
                 return formatElapsedTime(seconds - (days * 86400), nextOutput);
             } else {
                 var hours = Math.floor(seconds / 3600);
                 if (hours > 0) {
-                    nextOutput += hours + 'hr ';
+                    nextOutput += hours + 'h ';
                     return formatElapsedTime(seconds - (hours * 3600), nextOutput);
                 } else {
                     var minutes = Math.floor(seconds / 60);

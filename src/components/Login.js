@@ -3,7 +3,6 @@ import $ from 'jquery';
 import endpoint from '../endpoint';
 import { setPopupText } from '../popupMethods';
 import Cookies from 'js-cookie';
-import Upload from './Upload';
 
 export default class Login extends Component {
     constructor() {
@@ -29,8 +28,11 @@ export default class Login extends Component {
                 }
             } else {
                 Cookies.set('token', result.token, { expires: 1 });
-                window.location.replace('/upload');
-                //this.props.changePage(<Upload changePage={this.props.changePage} />);
+                if (result.admin) {
+                    window.location.replace('/management');
+                } else {
+                    window.location.replace('/upload');
+                }
             }
         });
     }
